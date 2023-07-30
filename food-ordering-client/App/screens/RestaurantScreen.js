@@ -12,6 +12,7 @@ import * as Icon from "react-native-feather";
 import { themeColors } from "../theme";
 import { useParams } from "react-router";
 import DishRow from "../components/DishRow";
+import CartIcon from "../components/CartIcon";
 
 const RestaurantScreen = () => {
   const { params } = useRoute();
@@ -21,7 +22,8 @@ const RestaurantScreen = () => {
   return (
     <>
       {/* <Text>{JSON.stringify(restaurant, null, 3)}</Text> */}
-
+      <CartIcon />
+      <StatusBar style="light" />
       <ScrollView>
         <View className="relative">
           <Image className="w-full h-72" source={restaurant.image} />
