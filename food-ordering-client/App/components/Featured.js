@@ -14,10 +14,10 @@ const Featured = ({ title, description, restaurants }) => {
   // console.log(featured);
   // const [activeCategory, setActiveCategory] = useState();
   // const [isActive, setIsActive] = useState(false);
-  console.log("restaurants", JSON.stringify(restaurants, null, 3));
+  // console.log("restaurants", JSON.stringify(restaurants, null, 3));
   return (
     <View>
-      <View className="flex-row justify-between items-cernter px-4">
+      <View className="flex-row justify-between items-center px-4">
         <View>
           <Text className="font-bold text-lg">{title}</Text>
           <Text className="text-gray-500 text-xs">{description}</Text>

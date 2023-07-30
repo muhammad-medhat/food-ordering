@@ -11,7 +11,10 @@ import { themeColors } from "../theme";
 import { useNavigation } from "@react-navigation/native";
 
 const RestaurantCard = ({ restaurant }) => {
-  // console.log("restaurant restaurant card in homepage__________ ", restaurant);
+  // console.log(
+  //   "restaurant restaurant card in homepage__________ ",
+  //   JSON.stringify(restaurant, null, 3)
+  // );
   const nav = useNavigation();
   return (
     <TouchableWithoutFeedback
@@ -27,14 +30,17 @@ const RestaurantCard = ({ restaurant }) => {
         className="mr-6 bg-white rounded-3xl shadow-lg"
       >
         {/* <Text>restaurant card ID: {restaurant._id}</Text> */}
-        <Image className="h-36 w-64 rounded-t-3xl" source={restaurant.image} />
+        <Image
+          className="h-36 w-64 rounded-t-3xl items-center"
+          source={restaurant.image}
+        />
         <View className="px-3 pb-4 space-y-2">
           <View className="flex-row restaurants-center space-x-1">
             <Image
               source={require("../assets/images/fullStar.png")}
               className="h-4 w-4"
             />
-            <Text className="text-lg font-bold pt-2">{restaurant.title}</Text>
+            <Text className="text-lg font-bold pt-2">{restaurant.name}</Text>
             <Text className="text-xs">
               <Text className="text-green-700">{restaurant.rating}</Text>
               <Text className="text-gray-700">
@@ -46,6 +52,9 @@ const RestaurantCard = ({ restaurant }) => {
               </Text>
             </Text>
           </View>
+          {/* <View>
+            <Text>{JSON.stringify(restaurant, null, 3)}</Text>
+          </View> */}
           <View className="flex-row restaurants-center space-x-1">
             <Icon.MapPin color="gray" width={15} height={15} />
             <Text className="text-gray-700 text-xs">
