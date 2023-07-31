@@ -2,11 +2,13 @@ import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import { themeColors } from "../theme";
 import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
+import { selectCartItems, selectCartTotal } from "../slices/cartSlice";
 
 const CartIcon = () => {
-  const cartItems = [1, 2, 3];
+  const cartItems = useSelector(selectCartItems);
   const navigation = useNavigation();
-  const cartTotal = 0;
+  const cartTotal = useSelector(selectCartTotal);
 
   if (cartItems.length === 0) return;
 

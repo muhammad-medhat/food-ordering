@@ -1,28 +1,36 @@
-import {
-  View,
-  Text,
-  StatusBar,
-  TouchableOpacity,
-  Image,
-  ScrollView,
-} from "react-native";
-import React, { useEffect, useMemo, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import * as Icon from "react-native-feather";
+import { useDispatch, useSelector } from "react-redux";
+import { selectRestaurant } from "../slices/restaurantSlice";
 import { themeColors } from "../theme";
-import { featured } from "../../data";
+import {
+  removeFromCart,
+  selectCartItems,
+  selectCartTotal,
+} from "../slices/cartSlice";
+
 export default function CartScreen() {
-  const restaurant = featured.restaurants[0];
-  const [groupedItems, setGroupedItems] = useState([]);
-  const cartItems = [];
-  const cartTotal = [];
+  const restaurant = useSelector(selectRestaurant);
+  const [groupedItems, setGroupedItems] = useState({});
+  const cartItems = useSelector(selectCartItems);
+  const cartTotal = useSelector(selectCartTotal);
 
   const navigation = useNavigation();
   const deliveryFee = 2;
+  const dispatch = useDispatch();
   useEffect(() => {
-    setGroupedItems(restaurant.dishes);
-  }, []);
+    const gItems = cartItems.reduce((group, item) => {
+      if (group[item.id]) {
+        group[item.id].push(item);
+      } else {
+        group[item.id] = [item];
+      }
+      return group;
+    }, {});
+    setGroupedItems(gItems);
+  }, [cartItems]);
 
   return (
     <View className=" bg-white flex-1">
@@ -68,6 +76,8 @@ export default function CartScreen() {
       >
         {/* <Text>{JSON.stringify(groupedItems, null, 3)}</Text> */}
         {Object.entries(groupedItems).map(([key, dish]) => {
+          // JSON.stringify(dish, null, 3);
+
           return (
             <View
               key={key}
@@ -84,7 +94,7 @@ export default function CartScreen() {
               <TouchableOpacity
                 className="p-1 rounded-full"
                 style={{ backgroundColor: themeColors.bgColor(1) }}
-                //onPress={() => dispatch(removeFromCart({ id: dishes[0]?.id }))}
+                onPress={() => dispatch(removeFromCart({ id: dish?.id }))}
               >
                 <Icon.Minus
                   strokeWidth={2}

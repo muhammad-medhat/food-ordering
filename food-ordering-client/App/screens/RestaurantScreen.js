@@ -13,12 +13,23 @@ import { themeColors } from "../theme";
 import { useParams } from "react-router";
 import DishRow from "../components/DishRow";
 import CartIcon from "../components/CartIcon";
+import { useDispatch } from "react-redux";
+import { setRestaurant } from "../slices/restaurantSlice";
+import { selectCartItems } from "../slices/cartSlice";
 
 const RestaurantScreen = () => {
   const { params } = useRoute();
   const { restaurant } = params;
 
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (restaurant && restaurant._id) {
+      dispatch(setRestaurant(restaurant));
+
+      // console.log("==========", restaurant);
+    }
+  }, []);
   return (
     <>
       {/* <Text>{JSON.stringify(restaurant, null, 3)}</Text> */}

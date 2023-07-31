@@ -4,10 +4,15 @@ import { StyleSheet, Text, View } from "react-native";
 import Categories from "./App/components/Categories";
 import HomeScreen from "./App/screens/HomeScreen";
 import Navigation from "./App/Navigation";
+import { Provider } from "react-redux";
+import { store } from "./store";
 
 export default function App() {
-  // return <HomeScreen />;
-  return <Navigation />;
+  return (
+    <Provider store={store}>
+      <Navigation />
+    </Provider>
+  );
 }
 
 const styles = StyleSheet.create({

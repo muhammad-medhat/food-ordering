@@ -13,10 +13,12 @@ import { themeColors } from "../theme";
 import * as Icon from "react-native-feather";
 
 import { featured } from "../../data";
+import { useSelector } from "react-redux";
+import { selectRestaurant } from "../slices/restaurantSlice";
 
 export default function DeliveryScreen() {
   const navigation = useNavigation();
-  const restaurant = featured.restaurants[0];
+  const restaurant = useSelector(selectRestaurant);
 
   const handleCancel = () => {
     navigation.navigate("Home");
