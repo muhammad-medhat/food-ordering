@@ -16,6 +16,7 @@ import CartIcon from "../components/CartIcon";
 import { useDispatch } from "react-redux";
 import { setRestaurant } from "../slices/restaurantSlice";
 import { selectCartItems } from "../slices/cartSlice";
+import { urlFor } from "../../sanity";
 
 const RestaurantScreen = () => {
   const { params } = useRoute();
@@ -23,6 +24,7 @@ const RestaurantScreen = () => {
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const { image, name, rating, reviews, address } = restaurant;
   useEffect(() => {
     if (restaurant && restaurant._id) {
       dispatch(setRestaurant(restaurant));
@@ -32,12 +34,18 @@ const RestaurantScreen = () => {
   }, []);
   return (
     <>
-      {/* <Text>{JSON.stringify(restaurant, null, 3)}</Text> */}
+      {/* <View>
+        <Text>{JSON.stringify(restaurant, null, 3)}</Text>
+      </View> */}
+
       <CartIcon />
       <StatusBar style="light" />
       <ScrollView>
         <View className="relative">
-          <Image className="w-full h-72" source={restaurant.image} />
+          <Image
+            className="w-full h-72"
+            source={{ uri: urlFor(image).url() }}
+          />
           <TouchableOpacity
             onPress={() => navigation.goBack()}
             className="absolute top-14 left-4 bg-gray-50 p-2 rounded-full shadow"
@@ -50,7 +58,7 @@ const RestaurantScreen = () => {
           className="bg-white -mt-12 pt-6"
         >
           <View className="px-5">
-            <Text className="text-3xl font-bold">{restaurant.name}</Text>
+            <Text className="text-3xl font-bold">{name}</Text>
             <View className="flex-row space-x-2 my-1">
               <View className="flex-row items-center space-x-1">
                 <Image
@@ -58,20 +66,15 @@ const RestaurantScreen = () => {
                   className="h-4 w-4"
                 />
                 <Text className="text-xs">
-                  <Text className="text-green-700">{restaurant.rating}</Text>
-                  <Text className="text-gray-700">
-                    ({restaurant.reviews} review)
-                  </Text>
-                  ·{" "}
-                  <Text className="font-semibold text-gray-700">
-                    {restaurant.type}
-                  </Text>
+                  <Text className="text-green-700">{rating}</Text>
+                  <Text className="text-gray-700">({reviews} review)</Text>·
+                  {/* <Text className="font-semibold text-gray-700">{type}</Text> */}
                 </Text>
               </View>
               <View className="flex-row items-center space-x-1">
                 <Icon.MapPin color="gray" width={15} height={15} />
                 <Text className="text-gray-800 text-xs">
-                  Nearby · {restaurant.address}
+                  Nearby · {address}
                 </Text>
               </View>
             </View>

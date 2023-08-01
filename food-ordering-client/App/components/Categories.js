@@ -1,10 +1,17 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
-import { categories } from "../../data";
+import React, { useEffect, useState } from "react";
+// import { categories } from "../../data";
 import { ScrollView } from "react-native";
+import { getCategories } from "../../api";
+import { urlFor } from "../../sanity";
 const Categories = () => {
-  //   const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [activeCategory, setActiveCategory] = useState();
+  useEffect(() => {
+    getCategories().then((cats) => {
+      setCategories(cats);
+    });
+  }, [categories]);
   return (
     <View className="mt-4">
       <ScrollView
@@ -34,7 +41,8 @@ const Categories = () => {
               >
                 <Image
                   style={{ width: 45, height: 45 }}
-                  source={category.image}
+                  // className="rounded-full"
+                  source={{ uri: urlFor(category.image).url() }}
                 />
               </TouchableOpacity>
               <Text className={"text-sm " + textClass}>{category.name}</Text>

@@ -9,16 +9,15 @@ import React from "react";
 import * as Icon from "react-native-feather";
 import { themeColors } from "../theme";
 import { useNavigation } from "@react-navigation/native";
+import { urlFor } from "../../sanity";
 
-const RestaurantCard = ({ restaurant }) => {
-  // console.log(
-  //   "restaurant restaurant card in homepage__________ ",
-  //   JSON.stringify(restaurant, null, 3)
-  // );
+const RestaurantCard = (restaurant) => {
+  const { image, name, rating, reviews, address } = restaurant.restaurant;
+  // console.log("immmmmmmmmmmmmmmmmmmmmm", image, restaurant);
   const nav = useNavigation();
   return (
     <TouchableWithoutFeedback
-      onPress={() => nav.navigate("Restaurant", { restaurant })}
+      onPress={() => nav.navigate("Restaurant", { ...restaurant })}
     >
       <View
         style={{
@@ -32,7 +31,7 @@ const RestaurantCard = ({ restaurant }) => {
         {/* <Text>restaurant card ID: {restaurant._id}</Text> */}
         <Image
           className="h-36 w-64 rounded-t-3xl items-center"
-          source={restaurant.image}
+          source={{ uri: urlFor(image).url() }}
         />
         <View className="px-3 pb-4 space-y-2">
           <View className="flex-row restaurants-center space-x-1">
@@ -40,16 +39,12 @@ const RestaurantCard = ({ restaurant }) => {
               source={require("../assets/images/fullStar.png")}
               className="h-4 w-4"
             />
-            <Text className="text-lg font-bold pt-2">{restaurant.name}</Text>
+            <Text className="text-lg font-bold pt-2">{name}</Text>
             <Text className="text-xs">
-              <Text className="text-green-700">{restaurant.rating}</Text>
-              <Text className="text-gray-700">
-                ({restaurant.reviews} review.)
-              </Text>
+              <Text className="text-green-700">{rating}</Text>
+              <Text className="text-gray-700">({reviews} review.)</Text>
 
-              <Text className="font-semibold text-gray-700">
-                {restaurant.type}
-              </Text>
+              {/* <Text className="font-semibold text-gray-700">{type}</Text> */}
             </Text>
           </View>
           {/* <View>
@@ -57,9 +52,7 @@ const RestaurantCard = ({ restaurant }) => {
           </View> */}
           <View className="flex-row restaurants-center space-x-1">
             <Icon.MapPin color="gray" width={15} height={15} />
-            <Text className="text-gray-700 text-xs">
-              Nearby · {restaurant.address}
-            </Text>
+            <Text className="text-gray-700 text-xs">Nearby · {address}</Text>
           </View>
         </View>
       </View>
@@ -68,5 +61,3 @@ const RestaurantCard = ({ restaurant }) => {
 };
 
 export default RestaurantCard;
-
-const styles = StyleSheet.create({});

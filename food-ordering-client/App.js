@@ -1,5 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
+import "react-native-url-polyfill/auto";
+
 // import Navigation from "./Navigation";
 import Categories from "./App/components/Categories";
 import HomeScreen from "./App/screens/HomeScreen";

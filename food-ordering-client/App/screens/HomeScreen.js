@@ -6,17 +6,29 @@ import {
   TextInput,
   ScrollView,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Categories from "../components/Categories";
+import RestaurantCard from "../components/RestaurantCard";
 import Search from "../components/Search";
 import { themeColors } from "../theme";
 import * as Icon from "react-native-feather";
 import { featured } from "../../data";
 import Featured from "../components/Featured";
+import { getFeaturedRestaurants, getRestaurants } from "../../api";
+import Restaurants from "../components/Restaurants";
 
 const HomeScreen = () => {
-  const featuredRestaurants = featured;
-  // console.log(JSON.stringify(featuredRestaurants, null, 3));
+  const [featuredRestaurants, setFeaturedRestaurants] = useState([]);
+  const [restaurants, setRestaurants] = useState([]);
+  useEffect(() => {
+    // getFeaturedRestaurants().then((feat) => setFeaturedRestaurants(feat));
+    // setFeaturedRestaurants(featured)
+    // console.log(
+    //   "*** Restaurants ***",
+    //   typeof restaurants,
+    //   JSON.stringify(restaurants, null, 3)
+    // );
+  }, [restaurants]);
   return (
     <SafeAreaView className="bg-white">
       <StatusBar barStyle="dark-content" />
@@ -25,7 +37,7 @@ const HomeScreen = () => {
         <View className="flex-row flex-1 items-center p-3 rounded-full border border-gray-300">
           <Icon.Search height="25" width="25" stroke="gray" />
           <TextInput
-            placeholder="Resturants"
+            placeholder="Restaurants"
             className="ml-2 flex-1"
             keyboardType="default"
           />
@@ -55,9 +67,10 @@ const HomeScreen = () => {
       >
         <Categories />
         <View className="mt-5">
-          <Text>Featured restaurants</Text>
-          {featuredRestaurants ? (
-            [featuredRestaurants, featuredRestaurants].map((r, i) => (
+          <Text>Featured Restaurants</Text>
+          <Restaurants />
+          {/* {featuredRestaurants?.length>0 ? (
+            [featuredRestaurants].map((r, i) => (
               <Featured
                 key={`feat-${i}`}
                 title={r.title}
@@ -67,7 +80,7 @@ const HomeScreen = () => {
             ))
           ) : (
             <Text>Nothing featured</Text>
-          )}
+          )} */}
         </View>
       </ScrollView>
     </SafeAreaView>
